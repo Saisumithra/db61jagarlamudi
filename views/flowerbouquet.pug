@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h1= title
+  - let flowerbouquets=[{flowername:"Rose",numberofflowers:"23",deliverylocation:"Maryville"},{flowername:"Lilly",numberofflowers:"24",deliverylocation:"Texas"},{flowername:"Sunflower",numberofflowers:"25",deliverylocation:"Kansas"}]
+                       
+                        
+ 
+  
+    div(class="container-fluid mt-3")
+    div(class="row")
+        each flowerbouquet,index in flowerbouquets
+            div(class="col-sm-2 bg-warning m-1 p-3" onclick=`buy(${index})`) #{flowerbouquet.flowername} - #{flowerbouquet.numberofflowers} - #{flowerbouquet.deliverylocation}
+    script.
+     
+      function buy(itemNo)
+      {
+        alert(`You purchased Item ${itemNo+1}`)
+      }
