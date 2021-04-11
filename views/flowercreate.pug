@@ -1,0 +1,35 @@
+extends layout
+
+block content
+  h1= title
+
+  form(id='flowerForm', action="/resource/flowers", method="POST")
+    div.form-group
+        label.flowerAttr(for='flowername') flower Name
+        input#flowername(type='text', name='flowername' )
+    div.form-group
+        label.flowerAttr(for='numberofflowers') No of flowers
+        input#numberofflowers(type='number', name='numberofflowers')
+    div.form-group
+        label.flowerAttr(for='deliverylocation') Delevery location
+        input#deliverylocation(type='text', name='deliverylocation')
+    input(type="submit")
+
+  script.
+    document.forms['flowerForm'].addEventListener('submit', (event) => {
+      event.preventDefault();
+      // TODO do something here to show user that form is being submitted
+      fetch(event.target.action, {
+        method: 'POST',
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+      }).then((resp) => {
+        return resp.json(); // or resp.text() or whatever the server sends
+      }).then((body) => {
+        alert("Save succeded")
+        // TODO handle body
+      }).catch((error) => {
+        // TODO handle error
+        alert("Save failed " + error )
+      });
+    });
+

@@ -1,0 +1,44 @@
+extends layout
+
+block content
+  h1= title
+
+  - let flowerid = toShow._id
+  - let flowername = toShow.flowername
+  - let numberofflowers = toShow.numberofflowers
+  - let deliverylocation = toShow.deliverylocation
+  
+  div.row(class='mb-2')
+    div.mr-1 ID is
+    div #{flowerid}
+  - let actionid = "/resource/flowers/" + flowerid
+  form(id='flowerForm', action= actionid, method="PUT")
+    div.form-group
+        label.flowerAttr(for='flowername') flower Name
+        input#flowername(type='text', name='flowername', value= flowername )
+    div.form-group
+        label.flowerAttr(for='numberofflowers') No of flowers
+        input#size(type='number', name='numberofflowers', value= numberofflowers )
+    div.form-group
+        label.flowerAttr(for='deliverylocation') Delevery location
+        input#cost(type='text', name='deliverylocation', value= deliverylocation )
+    input(type="submit")
+
+  script.
+    document.forms['flowerForm'].addEventListener('submit', (event) => {
+      event.preventDefault();
+      // TODO do something here to show user that form is being submitted
+      fetch(event.target.action, {
+        method: 'PUT',
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+      }).then((resp) => {
+        return resp.json(); // or resp.text() or whatever the server sends
+      }).then((body) => {
+        alert("Update succeded")
+        // TODO handle body
+      }).catch((error) => {
+        // TODO handle error
+        alert("Update failed " + error )
+      });
+    });
+

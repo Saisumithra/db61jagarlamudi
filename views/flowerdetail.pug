@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  h1= title
+
+  - let flowerid = toShow._id
+  - let flowername = toShow.flowername
+  - let numberofflowers = toShow.numberofflowers
+  - let deliverylocation = toShow.deliverylocation
+  div
+    div.row
+      div(class='flowerAttr mr-3') flower ID is:
+      div #{flowerid}
+    div.row
+      div(class='flowerAttr mr-3') flower name:
+      div #{flowername}
+    div.row
+      div(class='flowerAttr mr-3') flower delivery location is:
+      div #{deliverylocation}
+    div.row
+      div(class='flowerAttr mr-3') no of flowes are:
+      div #{numberofflowers}
