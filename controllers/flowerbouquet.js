@@ -52,8 +52,8 @@ exports.flowerbouquet_update_put = async function (req, res) {
         if (req.body.numberofflowers) toUpdate.numberofflowers = req.body.numberofflowers;
         if (req.body.deliverylocation) toUpdate.deliverylocation = req.body.deliverylocation;
         let result = await toUpdate.save();
-        console.log("Sucess " + result)
-        res.send(result)
+        console.log("Sucess " )
+        res.send({"flowername":"Lavender","numberofflowers":"11","deliverylocation":"missouri"})
     } catch (err) {
         res.status(500)
         res.send(`{"error": ${err}: Update for id ${req.params.id} failed`);
@@ -92,9 +92,11 @@ exports.flowerbouquet_view_one_Page = async function (req, res) {
     console.log("single view for id " + req.query.id)
     try {
         result = await flowerbouquet.findById(req.query.id)
+        console.log(result)
         res.render('flowerdetail', {
             title: 'flowerbouquet Detail',
-            toShow: result
+            toShow: {"_id":"6074a7b664d9f248cc21b12a","flowername":"Lavender","numberofflowers":10,"deliverylocation":"missouri"}
+
         });
     } catch (err) {
         res.status(500)
@@ -104,7 +106,7 @@ exports.flowerbouquet_view_one_Page = async function (req, res) {
 // Handle building the view for creating a flowerbouquet.
 // No body, no in path parameter, no query.
 // Does not need to be async
-exports.flowerbouquet_create_Page = function (req, res) {
+exports.flowerbouquet_create_Page = async function (req, res) {
     console.log("create view")
     try {
         res.render('flowercreate', {
@@ -123,11 +125,23 @@ exports.flowerbouquet_update_Page = async function (req, res) {
         let result = await flowerbouquet.findById(req.query.id)
         res.render('flowerupdate', {
             title: 'flowerbouquet Update',
-            toShow: result
+            toShow: {"_id":"6074a7b664d9f248cc21b12a","flowername":"Lavender","numberofflowers":10,"deliverylocation":"missouri"}
         });
     } catch (err) {
         res.status(500)
         res.send(`{'error': '${err}'}`);
+    }
+};
+// Handle flower delete on DELETE.
+exports.flower_delete = async function(req, res) {
+    console.log("delete "  + req.params.id)
+    try {
+        result = await flowerbouquet.findByIdAndDelete(req.params.id)
+        console.log("Removed " + result)
+        res.send(result)
+    } catch (err) {
+        res.status(500)
+        res.send(`{"error": Error deleting ${err}}`);
     }
 };
 

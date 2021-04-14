@@ -3,7 +3,7 @@ extends layout
 block content
   h1= title
 
-  form(id='flowerForm', action="/resource/flowers", method="POST")
+  form(id='flowerForm', action="/resource/flowerbouquet", method="POST")
     div.form-group
         label.flowerAttr(for='flowername') flower Name
         input#flowername(type='text', name='flowername' )

@@ -3,23 +3,56 @@ extends layout
 block content
   h1= title
 
-  - let flowerid = toShow._id
-  - let flowername = toShow.flowername
-  - let numberofflowers = toShow.numberofflowers
-  - let deliverylocation = toShow.deliverylocation
-  div
-    div.row
-      div(class='flowerAttr mr-3') flower ID is:
-      div #{flowerid}
-    div.row
-      div(class='flowerAttr mr-3') flower name:
-      div #{flowername}
-    div.row
-      div(class='flowerAttr mr-3') flower delivery location is:
-      div #{deliverylocation}
-    div.row
-      div(class='flowerAttr mr-3') no of flowes are:
-      div #{numberofflowers}
-    div.row
-      div(class='flowerAttr mr-3') action: 
-      button(class='btn btn-sm btn-danger') delete
+  if (toShow == null)
+    h2 No instance to delete
+  else
+    - let flowerbouquetid = toShow._id
+    - let flowername = toShow.flowername
+    - let numberofflowers = toShow.numberofflowers
+    - let deliverylocation = toShow.deliverylocation
+    - let actionid = "/resource/flowerbouquet/" + flowerbouquetid
+    script let actionid = "#{actionid}"
+    div
+      div.row
+        div(class='flowerbouquetAttr mr-3') flowerbouquet ID is:
+        div #{flowerbouquetid}
+      div.row
+        div(class='flowerbouquetAttr mr-3') flower name is:
+        div #{flowername}
+      div.row
+        div(class='flowerbouquetAttr mr-3') number of flowers:
+        div #{numberofflowers}
+      div.row
+        div(class='flowerbouquetAttr mr-3') :delivary location
+        div #{deliverylocation}
+
+    button(class="btn btn-danger m-2" onclick="deleteOnid()") Delete
+    button(class="btn btn-secondary m-2" onclick="cancel()") Cancel
+
+  script.
+    function cancel() {
+      // Go back to the home page for the flowerbouquet collection
+      window.location.href='/flowerbouquet'
+    }
+  script.
+    function deleteOnid() {
+      console.log("starting delete")
+      // delete first
+      fetch(actionid, {
+        method: 'DELETE'      // Don't need a body for the delete
+      }).then((resp) => {
+        return resp.json(); // or resp.text() or whatever the server sends
+      }).then((body) => {
+        alert("Delete succeded")
+        window.location.href='/flowerbouquet'
+        // TODO handle body
+      }).catch((error) => {
+        // TODO handle error
+        alert("Delete failed " + error )
+      });
+    }
+
+      
+  
+
+
