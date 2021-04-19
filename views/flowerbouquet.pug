@@ -3,15 +3,14 @@ extends layout
 block content
   h1= title
     - let flowerbouquets=results
-    //- let flowerbouquets  = results         
+    div(class="container-fluid")
+      div(class="row m-1")
+      each flowerbouquet in flowerbouquets
+        - let destination = `dispatch(\"/flowerbouquet/update/?id=${flowerbouquet._id}\")`
+        div(class="row-sm-2", class="m-1") flowerbouquet #{flowerbouquet.flowername}(#{flowerbouquet.numberofflowers}) is #{flowerbouquet.deliverylocation}
+        button.btn( class="btn-primary ml-1", onclick= destination) Update
 
-    div(class="container-fluid mt-3")
-    div(class="row")
-      each flowerbouquet ,index in flowerbouquets
-        div(class="col-sm-2 bg-warning m-1 p-3" onclick=`buy(${index})`) #{flowerbouquet.flowername} - #{flowerbouquet.numberofflowers} - #{flowerbouquet.deliverylocation}
-    script.
-
-      function buy(itemNo)
-      {
-        alert(`You purchased Item ${itemNo+1}`)
-      }
+  script.
+   function dispatch(path){
+    window.location.href=path
+   }
