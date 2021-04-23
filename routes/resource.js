@@ -17,4 +17,12 @@ router.put('/flowerbouquet/:id', flowerbouquet_controller.flowerbouquet_update_p
 router.get('/flowerbouquet/:id', flowerbouquet_controller.flowerbouquet_detail);
 // GET request for list of all Costume items.
 router.get('/flowerbouquet', flowerbouquet_controller.flowerbouquet_list);
+/* GET detail vegetable page */
+router.get('/detail', flowerbouquet_controller.flowerbouquet_view_one_Page);
+/* GET create costume page */
+router.get('/create', flowerbouquet_controller.flowerbouquet_create_Page);
+/* GET create update page */
+router.get('/update', flowerbouquet_controller.flowerbouquet_update_Page);
+/* GET create costume page */
+router.get('/delete', flowerbouquet_controller.flowerbouquet_delete_Page);
 module.exports = router;

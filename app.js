@@ -18,19 +18,11 @@ passport.use(new LocalStrategy(
   return done(null, user);
   });
   }))
-const connectionString = 'mongodb+srv://sumithra03:sumithra@cluster0.366ex.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
-mongoose = require('mongoose');
-mongoose.connect(connectionString, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
-
-var flowerbouquet = require("./models/flowerbouquet");
-
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var flowerbouquetRouter = require('./routes/flowerbouquet');
 var starsRouter = require('./routes/stars');
+var flowerbouquet = require('./models/flowerbouquet')
 var slotRouter = require('./routes/slot');
 var resourceRouter = require('./routes/resource');
 
@@ -72,7 +64,10 @@ let reseed = true;
 if (reseed) {
   recreateDB();
 }
-
+const connectionString = process.env.MONGO_CON
+mongoose = require('mongoose');
+mongoose.connect(connectionString,
+{useNewUrlParser: true, useUnifiedTopology: true});
 var app = express();
 
 // view engine setup
