@@ -53,7 +53,7 @@ exports.flowerbouquet_update_put = async function (req, res) {
         if (req.body.deliverylocation) toUpdate.deliverylocation = req.body.deliverylocation;
         let result = await toUpdate.save();
         console.log("Sucess " )
-        res.send({"flowername":"Lavender","numberofflowers":"11","deliverylocation":"missouri"})
+        res.send(result)
     } catch (err) {
         res.status(500)
         res.send(`{"error": ${err}: Update for id ${req.params.id} failed`);
@@ -95,7 +95,7 @@ exports.flowerbouquet_view_one_Page = async function (req, res) {
         console.log(result)
         res.render('flowerdetail', {
             title: 'flowerbouquet Detail',
-            toShow: {"_id":"6074a7b664d9f248cc21b12a","flowername":"Lavender","numberofflowers":10,"deliverylocation":"missouri"}
+            toShow: result
 
         });
     } catch (err) {
@@ -125,7 +125,7 @@ exports.flowerbouquet_update_Page = async function (req, res) {
         let result = await flowerbouquet.findById(req.query.id)
         res.render('flowerupdate', {
             title: 'flowerbouquet Update',
-            toShow: {"_id":"6074a7b664d9f248cc21b12a","flowername":"Lavender","numberofflowers":10,"deliverylocation":"missouri"}
+            toShow: result
         });
     } catch (err) {
         res.status(500)
